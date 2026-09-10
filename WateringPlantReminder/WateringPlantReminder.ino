@@ -43,7 +43,7 @@ class BLECallbacks : public BLEServerCallbacks {
 };
 
 void error() {
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
   delay(5000);
   //trigger sleep
   startSleep();
@@ -86,6 +86,9 @@ void startSleep() {
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+
+ 
 
   if (!initBLE()) {
     error();
@@ -101,7 +104,8 @@ void setup() {
   startBLEBroadcast();
 
   delay(BLE_BROADCAST_TIMEOUT);
-  if (!active_connection)
+
+  if (!active_connection && !Serial)
     startSleep();
 }
 
